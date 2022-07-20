@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  playful_ruby:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - type: bind
+        source: $HOME/.gitconfig
+        target: /etc/gitconfig
+      - .:/playful_ruby:delegated
+      - bundle-cache:/usr/local/bundle
+      - ${PWD}/.bash_history:/root/.bash_history
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  bundle-cache:
