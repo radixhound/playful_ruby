@@ -1,7 +1,11 @@
 class TurboDeviseController < ApplicationController
     class Responder < ActionController::Responder
       def to_turbo_stream
-        controller.render(options.merge(formats: :html))
+        if controller.controller_name == 'registrations'
+          controller.render
+        else
+          controller.render(options.merge(formats: :html))
+        end
       rescue ActionView::MissingTemplate => error
         if get?
           raise error
