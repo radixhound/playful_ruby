@@ -1,0 +1,15 @@
+<div class="hive game-tile <%= game_tile.first_offset? ? 'gallery-offset-first' : '' %>" id='<%= dom_id(game_tile)%>'%>
+  <div class="hex outer-hex">
+    <div class="hex-in1">
+      <div class="hex-in2 outer-hex">
+        <div  class="hex inner-hex">
+          <div class="hex-in1">
+            <div style="background-color: #777" class="hex-in2 hex-area"> 
+              <p><%= render(game_tile.content) unless game_tile.empty? %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

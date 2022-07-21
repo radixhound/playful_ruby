@@ -6,22 +6,9 @@
 <section>
 	<div class="clearfix"></div>
 	<div class="game-board">
-		<% 7.times do |row| %>
-			<% 6.times do |cell| %>
-				<div class="hive game-tile <%= (row % 2 == 1 && cell == 0) ? 'gallery-offset-first' : '' %>">
-					<div class="hex outer-hex">
-						<div class="hex-in1">
-							<div class="hex-in2 outer-hex">
-								<div  class="hex inner-hex">
-									<div class="hex-in1">
-										<div style="background-color: #777" class="hex-in2 hex-area"> 
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+		<% @game_tiles.each do |row| %>
+			<% row.each do |game_tile| %>
+				<%= render game_tile %>
 			<% end %>
 			<div class="clearfix"></div>
 		<% end %>
