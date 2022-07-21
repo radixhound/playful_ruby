@@ -1,4 +1,15 @@
 class LobbyController < ApplicationController
+  # Move the person
+  #
+  # render buttons to the page
+  # send command to the server to move the person
+  #   - Player.update position player_controller CRUD
+  #   - Player.update(direction: "up")
+  #   - PlayerMovementIntentController#POST
+  #   -
+  # store of the state of the person
+  # send updates back to the screen to update the game board
+  #
   def index
     @game_tiles = []
     7.times do |row_number|

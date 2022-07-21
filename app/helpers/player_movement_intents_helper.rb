@@ -1,0 +1,2 @@
+module PlayerMovementIntentsHelper
+end
