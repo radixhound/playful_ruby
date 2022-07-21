@@ -12,5 +12,6 @@ class LobbyController < ApplicationController
   #
   def index
     @game_tiles = GameTile.all_by_grid
+    @player = GamePieces::Player.last # this should be tied to the current login
   end
 end
