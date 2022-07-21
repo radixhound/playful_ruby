@@ -11,7 +11,8 @@ class LobbyController < ApplicationController
   # send updates back to the screen to update the game board
   #
   def index
-    @game_tiles = GameTile.all_by_grid
+    @game_board = GameBoard.last
+    @game_tiles = @game_board.game_tiles.all_by_grid
     @player = GamePieces::Player.last # this should be tied to the current login
   end
 end

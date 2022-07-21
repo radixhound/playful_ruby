@@ -1,5 +1,7 @@
 class GameTile < ApplicationRecord
+  belongs_to :game_board
   belongs_to :game_piece, optional: true
+  broadcasts_to :game_board
 
   scope :all_by_grid, -> { all.order(row: :asc, column: :asc) }
   # scope :by_coordinates, ->(coordinates) { find_by(coordinates.to_h) }
@@ -14,10 +16,7 @@ class GameTile < ApplicationRecord
     game_piece.blank?
   end
 
-  # defines if this row should be shifted to the right so the the hexes line up
-  def first_offset?
-    row % 2 == 1 && column == 0
-  end
+  delegate :first_offset?, to: :coordinates
 
   def first_of_row?
     column == 0
@@ -28,7 +27,7 @@ class GameTile < ApplicationRecord
   end
 
   def coordinates
-    Coordinates.new(row: row, column: column)
+    @coordinates ||= Coordinates.new(row: row, column: column)
   end
 
   class Coordinates
@@ -41,6 +40,8 @@ class GameTile < ApplicationRecord
 
     def move(movement:, direction:)
       case movement
+      when 'up' then move_up
+      when 'down' then move_down
       when 'left'
         new_column = column.zero? ? 0 : column - 1
         Coordinates.new(row: row, column: new_column)
@@ -54,6 +55,36 @@ class GameTile < ApplicationRecord
 
     def to_h
       { row: row, column: column }
+    end
+
+    def move_up
+      new_row = row - 1
+
+      # going right
+      new_column = row_offset? ? column + 1 : column
+
+      return self if new_row.negative? || new_column > 5
+
+      Coordinates.new(row: new_row, column: new_column)
+    end
+
+    def move_down
+      new_row = row + 1
+
+      # going right
+      new_column = row_offset? ? column : column - 1
+
+      return self if new_row > 6 || new_column.negative?
+
+      Coordinates.new(row: new_row, column: new_column)
+    end
+
+    def row_offset?
+      row % 2 == 1
+    end
+
+    def first_offset?
+      row_offset? && column == 0
     end
   end
 end

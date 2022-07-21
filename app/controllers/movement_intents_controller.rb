@@ -5,5 +5,10 @@ class MovementIntentsController < ApplicationController
       movement: params[:movement], direction: player.direction
     )
     player.place(**new_coordinates.to_h)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to :root }
+    end
   end
 end

@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_21_171353) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_21_215812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_boards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "game_pieces", force: :cascade do |t|
     t.string "type"
@@ -27,6 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_171353) do
     t.bigint "game_piece_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "game_board_id"
+    t.index ["game_board_id"], name: "index_game_tiles_on_game_board_id"
     t.index ["game_piece_id"], name: "index_game_tiles_on_game_piece_id"
   end
 
