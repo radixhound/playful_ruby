@@ -43,11 +43,11 @@
 <section>
 	<div class="clearfix"></div>
 	<div class="game-board">
-		<% @game_tiles.each do |row| %>
-			<% row.each do |game_tile| %>
-				<%= render game_tile %>
+		<% @game_tiles.each do |game_tile| %>
+			<% if game_tile.first_of_row? && game_tile.row != 0 %>
+				<div class="clearfix"></div>
 			<% end %>
-			<div class="clearfix"></div>
+			<%= render game_tile %>
 		<% end %>
 	</div>
 <section>
