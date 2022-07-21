@@ -40,8 +40,8 @@ class GameTile < ApplicationRecord
 
     def move(movement:, direction:)
       case movement
-      when 'up' then move_up
-      when 'down' then move_down
+      when 'up' then move_up(direction)
+      when 'down' then move_down(direction)
       when 'left'
         new_column = column.zero? ? 0 : column - 1
         Coordinates.new(row: row, column: new_column)
@@ -57,22 +57,28 @@ class GameTile < ApplicationRecord
       { row: row, column: column }
     end
 
-    def move_up
+    def move_up(direction)
       new_row = row - 1
 
-      # going right
-      new_column = row_offset? ? column + 1 : column
+      new_column = if direction == 'right'
+        row_offset? ? column + 1 : column
+      else
+        row_offset? ? column : column - 1
+      end
 
       return self if new_row.negative? || new_column > 5
 
       Coordinates.new(row: new_row, column: new_column)
     end
 
-    def move_down
+    def move_down(direction)
       new_row = row + 1
 
-      # going right
-      new_column = row_offset? ? column : column - 1
+      new_column = if direction == 'right'
+        new_column = row_offset? ? column : column - 1
+      else
+        new_column = row_offset? ? column + 1 : column
+      end
 
       return self if new_row > 6 || new_column.negative?
 

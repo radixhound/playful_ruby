@@ -1,10 +1,16 @@
 class MovementIntentsController < ApplicationController
   def create
+    movement = params[:movement]
     player = GamePieces::Player.find(params[:player_id])
-    new_coordinates = player.game_tile.coordinates.move(
-      movement: params[:movement], direction: player.direction
-    )
-    player.place(**new_coordinates.to_h)
+
+    if movement.match(/face/)
+      player.face(command: movement)
+    else
+      new_coordinates = player.game_tile.coordinates.move(
+        movement: movement, direction: player.direction
+      )
+      player.place(**new_coordinates.to_h)
+    end
 
     respond_to do |format|
       format.turbo_stream
