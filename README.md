@@ -42,6 +42,6 @@ Day 3
 ### Fix bugs, get artwork, cleanup
 
 - [x] See if I can fix the multiple movement bug with locking
-- [ ] Finish the signup process and create a new player
+- [x] Finish the signup process and create a new player
 - [ ] Introduce artwork for the player
 - [ ] Add terrain for movement

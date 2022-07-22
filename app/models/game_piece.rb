@@ -1,5 +1,6 @@
 class GamePiece < ApplicationRecord
   has_one :game_tile
+  belongs_to :player
   broadcasts_to :game_tile
 
   def place(row:, column:)

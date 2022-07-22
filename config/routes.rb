@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :movement_intents, only: :create
   end
 
+  resources :configuration, only: [:edit, :update]
+
   # Defines the root path route ("/")
   root "lobby#index"
 end

@@ -1,1 +1,7 @@
-<p class='game-piece-person' id='<%= dom_id(player)%>'><%= player.representation %></p>
+<div class="game-piece-person <%= player.facing_right? ? "facing-right" : "facing-left"%>" id='<%= dom_id(player)%>'>
+<% if player.representation.present? %>
+  <%= player.representation.html_safe %>
+<% else %>
+  <%= render "/game_pieces/players/default_svg"%>
+<% end %>
+</div>

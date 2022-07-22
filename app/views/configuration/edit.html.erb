@@ -1,0 +1,26 @@
+
+<section class="place-content-center grid grid-cols-1 w-full">
+<div class="block p-6 rounded-lg shadow-lg bg-white w-96">
+  <h2 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600 text-center"> Configure Player </h2>
+
+  <%= form_for(@player, url: configuration_path(@player.id), html: { method: :put }) do |f| %>
+    <div class="form-group mb-6">
+      <label for="first_name" class="form-label inline-block mb-2 text-gray-700">First Name</label>
+      <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %>
+    </div>
+
+    <div class="form-group mb-6">
+      <label for="first_name" class="form-label inline-block mb-2 text-gray-700">Last Name</label>
+      <%= f.text_field :last_name, autocomplete: "last_name", class: "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %>
+    </div>
+
+    <div class="form-group mb-6">
+      <label for="first_name" class="form-label inline-block mb-2 text-gray-700">Game Piece SVG</label>
+      <%= f.text_area :player_svg, class: "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %>
+    </div>
+
+    <!-- Submit button -->
+    <%= f.submit "Submit", data: { "mdb-ripple" => "true", "mdb-ripple-color" => "light" }, class: "inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full" %>
+  <% end %>
+  </div>
+</section>
