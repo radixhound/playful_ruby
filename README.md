@@ -22,3 +22,26 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Things Todo
+
+Day 2
+
+### Move the person
+
+- [x] render buttons to the page
+  # DONE send command to the server to move the person
+  #   - Player.update position player_controller CRUD
+  #   - Player.update(direction: "up")
+  #   - PlayerMovementIntentController#POST
+  # DONE store of the state of the person
+  # DONE send updates back to the screen to update the game board
+
+Day 3
+
+### Fix bugs, get artwork, cleanup
+
+- [x] See if I can fix the multiple movement bug with locking
+- [ ] Finish the signup process and create a new player
+- [ ] Introduce artwork for the player
+- [ ] Add terrain for movement

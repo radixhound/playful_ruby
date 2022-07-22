@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_21_215812) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_22_185419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_215812) do
     t.string "direction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lock_version"
+    t.bigint "player_id"
+    t.index ["player_id"], name: "index_game_pieces_on_player_id"
   end
 
   create_table "game_tiles", force: :cascade do |t|
@@ -49,4 +52,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_215812) do
     t.index ["reset_password_token"], name: "index_login_credentials_on_reset_password_token", unique: true
   end
 
+  create_table "players", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.bigint "login_credential_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["login_credential_id"], name: "index_players_on_login_credential_id"
+  end
+
+  add_foreign_key "players", "login_credentials"
 end

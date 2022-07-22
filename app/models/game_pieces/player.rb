@@ -1,4 +1,5 @@
 module GamePieces
+  # maybe this is an avatar?
   class Player < GamePiece
     def representation
       facing_right? ?  "🤾‍♂️" : "⛹️‍♂️"
