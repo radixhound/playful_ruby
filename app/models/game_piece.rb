@@ -4,7 +4,10 @@ class GamePiece < ApplicationRecord
   broadcasts_to :game_tile
 
   def place(row:, column:)
+    new_tile = GameTile.find_by(row: row, column: column)
+
+    return unless new_tile.navigable_by?(navigating_by)
     game_tile.clear! if game_tile.present?
-    GameTile.find_by(row: row, column: column).update(game_piece: self)
+    new_tile.update(game_piece: self)
   end
 end

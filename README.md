@@ -43,5 +43,5 @@ Day 3
 
 - [x] See if I can fix the multiple movement bug with locking
 - [x] Finish the signup process and create a new player
-- [ ] Introduce artwork for the player
-- [ ] Add terrain for movement
+- [x] Introduce artwork for the player
+- [x] Add terrain for movement

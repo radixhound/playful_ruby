@@ -12,6 +12,14 @@ class GameTile < ApplicationRecord
     end
   end
 
+  def navigable_by?(method)
+    if background == 'water'
+      method == 'boat'
+    else
+      method == 'foot'
+    end
+  end
+
   def empty?
     game_piece.blank?
   end
