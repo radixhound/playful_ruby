@@ -3,6 +3,7 @@
     width: 181px;
     float: left;
     margin-right: 4px;
+    margin-top: -81px;
 }
 
 .game-tile .game-info {
@@ -11,11 +12,11 @@
     top: -999px;
 }
 
-.game-board .game-tile:nth-child(n+7) {
-    margin-top: -81px;
+.game-board .game-tile.first-row {
+    margin-top: 0;
 }
 
-.game-board .gallery-offset-first {
+.game-board .offset-first {
     margin-left: 92px;
 }
 
@@ -29,7 +30,7 @@
 }
 
 .game-tile .inner-hex {
-    width: 180px;
+    width: 186px;
     height: 214px;
 }
 

@@ -22,6 +22,10 @@ class GameTile < ApplicationRecord
     column == 0
   end
 
+  def first_row?
+    row == 0
+  end
+
   def clear!
     update(game_piece_id: nil)
   end
@@ -66,9 +70,8 @@ class GameTile < ApplicationRecord
         row_offset? ? column : column - 1
       end
 
-      return self if new_row.negative? || new_column > 5
-
-      Coordinates.new(row: new_row, column: new_column)
+      new_coordinates = Coordinates.new(row: new_row, column: new_column)
+      new_coordinates.off_board? ? self : new_coordinates
     end
 
     def move_down(direction)
@@ -80,9 +83,8 @@ class GameTile < ApplicationRecord
         new_column = row_offset? ? column + 1 : column
       end
 
-      return self if new_row > 6 || new_column.negative?
-
-      Coordinates.new(row: new_row, column: new_column)
+      new_coordinates = Coordinates.new(row: new_row, column: new_column)
+      new_coordinates.off_board? ? self : new_coordinates
     end
 
     def row_offset?
@@ -91,6 +93,10 @@ class GameTile < ApplicationRecord
 
     def first_offset?
       row_offset? && column == 0
+    end
+
+    def off_board?
+      row.negative? || row > 6 || column.negative? || column > 5
     end
   end
 end
