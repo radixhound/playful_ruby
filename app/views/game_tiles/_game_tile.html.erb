@@ -7,7 +7,6 @@
     <div class="hex-in1">
       <div class="hex-in2 hex-area game-tile-background-<%= game_tile.background %>">
         <%= render(game_tile.game_piece) unless game_tile.empty? %>
-<%= turbo_stream_from game_tile %>
       </div>
     </div>
   </div>

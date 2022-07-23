@@ -1,14 +1,24 @@
 class GameTile < ApplicationRecord
+  # need to be able to dynamically set the bounds?
+  MAX_COLUMN = 25
+  MAX_ROW = 25
+
   belongs_to :game_board
   belongs_to :game_piece, optional: true
   broadcasts_to :game_board
 
+  validates :column, uniqueness: { scope: :row }
+
   scope :all_by_grid, -> { all.order(row: :asc, column: :asc) }
-  # scope :by_coordinates, ->(coordinates) { find_by(coordinates.to_h) }
 
   def self.generate(rows:, columns:)
+    board = GameBoard.last
     rows.times do |row_number|
-      columns.times { |column_number| GameTile.create!(row: row_number, column: column_number) }
+      # if a row or column exists, it will just be false
+      columns.times do |column_number|
+        tile = GameTile.create(row: row_number, column: column_number, game_board: board)
+        Rails.logger.info "Tile: #{tile.errors.full_messages}" unless tile.valid?
+      end
     end
   end
 
@@ -104,7 +114,7 @@ class GameTile < ApplicationRecord
     end
 
     def off_board?
-      off = row.negative? || row > 6 || column.negative? || column > 5
+      off = row.negative? || row > MAX_ROW || column.negative? || column > MAX_COLUMN
       Rails.logger.info "Moving OFF BOARD" if off
       off
     end

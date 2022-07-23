@@ -15,10 +15,12 @@ module GamePieces
 
     def face_right!
       update(direction: 'right')
+      game_tile.touch
     end
 
     def face_left!
       update(direction: 'left')
+      game_tile.touch
     end
 
     def navigating_by
