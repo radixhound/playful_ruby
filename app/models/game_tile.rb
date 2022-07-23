@@ -97,9 +97,9 @@ class GameTile < ApplicationRecord
       new_row = row + 1
 
       new_column = if direction == 'right'
-        new_column = row_offset? ? column : column - 1
+        row_offset? ? column + 1 : column
       else
-        new_column = row_offset? ? column + 1 : column
+        row_offset? ? column : column - 1
       end
 
       Coordinates.new(row: new_row, column: new_column)
