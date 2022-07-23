@@ -4,6 +4,7 @@ class GamePiece < ApplicationRecord
   broadcasts_to :game_tile
 
   def place(row:, column:)
+    Rails.logger.info "\n\nPlacing player on #{row},#{column}\n\n"
     new_tile = GameTile.find_by(row: row, column: column)
 
     return unless new_tile.navigable_by?(navigating_by)

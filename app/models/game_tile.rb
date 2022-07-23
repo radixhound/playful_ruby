@@ -46,23 +46,25 @@ class GameTile < ApplicationRecord
     attr_reader :row, :column
 
     def initialize(row:, column:)
+      Rails.logger.info "New Coordinate: #{row}, #{column}"
       @row = row
       @column = column
     end
 
     def move(movement:, direction:)
-      case movement
-      when 'up' then move_up(direction)
-      when 'down' then move_down(direction)
-      when 'left'
-        new_column = column.zero? ? 0 : column - 1
-        Coordinates.new(row: row, column: new_column)
-      when 'right'
-        new_column = (column == 5) ? 5 : column + 1
-        Coordinates.new(row: row, column: new_column)
-      else
-        self
-      end
+      new_coordinates = case movement
+        when 'up' then move_up(direction)
+        when 'down' then move_down(direction)
+        when 'left'
+          new_column = column - 1
+          Coordinates.new(row: row, column: new_column)
+        when 'right'
+          new_column = column + 1
+          Coordinates.new(row: row, column: new_column)
+        else
+          self
+        end
+      new_coordinates.off_board? ? self : new_coordinates
     end
 
     def to_h
@@ -78,8 +80,7 @@ class GameTile < ApplicationRecord
         row_offset? ? column : column - 1
       end
 
-      new_coordinates = Coordinates.new(row: new_row, column: new_column)
-      new_coordinates.off_board? ? self : new_coordinates
+      Coordinates.new(row: new_row, column: new_column)
     end
 
     def move_down(direction)
@@ -91,8 +92,7 @@ class GameTile < ApplicationRecord
         new_column = row_offset? ? column + 1 : column
       end
 
-      new_coordinates = Coordinates.new(row: new_row, column: new_column)
-      new_coordinates.off_board? ? self : new_coordinates
+      Coordinates.new(row: new_row, column: new_column)
     end
 
     def row_offset?
@@ -104,7 +104,9 @@ class GameTile < ApplicationRecord
     end
 
     def off_board?
-      row.negative? || row > 6 || column.negative? || column > 5
+      off = row.negative? || row > 6 || column.negative? || column > 5
+      Rails.logger.info "Moving OFF BOARD" if off
+      off
     end
   end
 end

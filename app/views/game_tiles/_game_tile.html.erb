@@ -3,18 +3,12 @@
   class: "hive game-tile #{game_tile.first_offset? ? 'offset-first' : ''} #{game_tile.first_row? ? 'first-row' : ''}"
 ) do
 %>
-    <div class="hex outer-hex">
-      <div class="hex-in1">
-        <div class="hex-in2 outer-hex">
-          <div  class="hex inner-hex">
-            <div class="hex-in1">
-              <div class="hex-in2 hex-area game-tile-background-<%= game_tile.background %>">
-                <%= render(game_tile.game_piece) unless game_tile.empty? %>
+  <div  class="hex inner-hex">
+    <div class="hex-in1">
+      <div class="hex-in2 hex-area game-tile-background-<%= game_tile.background %>">
+        <%= render(game_tile.game_piece) unless game_tile.empty? %>
 <%= turbo_stream_from game_tile %>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
+  </div>
 <% end %>

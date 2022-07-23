@@ -26,10 +26,11 @@ class MovementIntentsController < ApplicationController
       @player.with_lock do
         @player.touch
         @player.game_tile.reload
-        new_coordinates = @player.game_tile.coordinates.move(
+        current_coordinates = @player.game_tile.coordinates
+        new_coordinates = current_coordinates.move(
           movement: movement, direction: @player.direction
         )
-        @player.place(**new_coordinates.to_h)
+        @player.place(**new_coordinates.to_h) unless new_coordinates == current_coordinates
       end
     end
   end
