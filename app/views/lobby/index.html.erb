@@ -13,8 +13,7 @@
 					<% end %>
         </div>
         <div class="grow ml-3">
-          <p class="text-sm font-semibold text-blue-600"><%= @player.name %>
-</p>
+          <p class="text-sm font-semibold text-blue-600"><%= @player.name %></p>
         </div>
       </div>
     </a>
@@ -62,10 +61,20 @@
 		<span>f</span>
 	<% end %>
 	</div>
+	<ul class="relative">
+		<% @high_scores.each do |high_scoring_player| %>
+			<%= turbo_frame_tag high_scoring_player do %>
+				<li class="relative">
+					<p class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+						<%= high_scoring_player.name %>: <%= high_scoring_player.score %>
+					</p>
+				</li>
+			<% end %>
+		<% end %>
+	</ul>
 </section>
 
 <%= turbo_stream_from @game_board %>
-
 	<div class="clearfix"></div>
 <%= render @game_board, game_tiles: @game_tiles%>
 <section>
