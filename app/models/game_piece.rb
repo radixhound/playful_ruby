@@ -15,7 +15,11 @@ class GamePiece < ApplicationRecord
   end
 
   def increment_score
-    score = Score.find_or_initialize_by(player: player, label: :tag, game_board: GameBoard.last)
-    score.update(value: score.value.to_i + 1, name: player.name)
+    score = Score.find_by(player: player, label: :tag, game_board: GameBoard.last)
+    if score.present?
+      score.update(value: score.value.to_i + 1, name: player.name)
+    else
+      Score.create(player: player, label: :tag, game_board: GameBoard.last, value: 1, name: player.name)
+    end
   end
 end

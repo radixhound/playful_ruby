@@ -64,14 +64,14 @@
 	<% end %>
 	</div>
 	<ul class="relative">
-		<% @high_scores.each do |high_score| %>
-			<%= turbo_frame_tag high_score do %>
+	  <%= turbo_frame_tag 'scores' do %>
+			<% @high_scores.each do |high_score| %>
 				<%= render high_score %>
 			<% end %>
 		<% end %>
 	</ul>
 </section>
 
-	<div class="clearfix"></div>
-<%= render @game_board, game_tiles: @game_tiles%>
+<div class="clearfix"></div>
+	<%= render @game_board, game_tiles: @game_tiles%>
 <section>
