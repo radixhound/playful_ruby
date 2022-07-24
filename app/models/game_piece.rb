@@ -8,8 +8,14 @@ class GamePiece < ApplicationRecord
 
     return unless new_tile.navigable_by?(navigating_by)
 
-    player.increment!(:score, 1) if new_tile.game_piece_id.present? # If there's someone on the tile then we score
+    increment_score if new_tile.game_piece_id.present? # If there's someone on the tile then we score
+
     game_tile.clear! if game_tile.present?
     new_tile.update(game_piece: self)
+  end
+
+  def increment_score
+    score = Score.find_or_initialize_by(player: player, label: :tag, game_board: GameBoard.last)
+    score.update(value: score.value.to_i + 1, name: player.name)
   end
 end

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player: one
+  value: 1
+  label: MyString
+  game_board: one
+
+two:
+  player: two
+  value: 1
+  label: MyString
+  game_board: two

@@ -1,4 +1,6 @@
 
+<%= turbo_stream_from @game_board %>
+
 <section class="view-window">
 <section class='sidebar w-60 h-full shadow-md bg-white px-1 absolute shrink-0 z-50'>
 <div class="w-60 h-full shadow-md bg-white absolute" id="sidenavSecExample">
@@ -62,19 +64,14 @@
 	<% end %>
 	</div>
 	<ul class="relative">
-		<% @high_scores.each do |high_scoring_player| %>
-			<%= turbo_frame_tag high_scoring_player do %>
-				<li class="relative">
-					<p class="flex items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-						<%= high_scoring_player.name %>: <%= high_scoring_player.score %>
-					</p>
-				</li>
+		<% @high_scores.each do |high_score| %>
+			<%= turbo_frame_tag high_score do %>
+				<%= render high_score %>
 			<% end %>
 		<% end %>
 	</ul>
 </section>
 
-<%= turbo_stream_from @game_board %>
 	<div class="clearfix"></div>
 <%= render @game_board, game_tiles: @game_tiles%>
 <section>

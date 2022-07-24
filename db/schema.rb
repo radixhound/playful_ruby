@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_24_014709) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_24_023319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,5 +64,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_24_014709) do
     t.index ["login_credential_id"], name: "index_players_on_login_credential_id"
   end
 
+  create_table "scores", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.integer "value"
+    t.string "label"
+    t.string "name"
+    t.bigint "game_board_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_board_id"], name: "index_scores_on_game_board_id"
+    t.index ["player_id"], name: "index_scores_on_player_id"
+  end
+
   add_foreign_key "players", "login_credentials"
+  add_foreign_key "scores", "game_boards"
+  add_foreign_key "scores", "players"
 end

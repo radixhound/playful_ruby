@@ -6,6 +6,15 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+
+  redis:
+    image: 'redis:5-alpine'
+    command: redis-server
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis:/data'
+
   playful_ruby:
     stdin_open: true
     tty: true
@@ -22,6 +31,11 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+
 
 volumes:
   bundle-cache:
+  redis:

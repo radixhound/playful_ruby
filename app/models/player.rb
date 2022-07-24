@@ -3,7 +3,6 @@ class Player < ApplicationRecord
 
   belongs_to :login_credential
   has_one :game_piece
-  broadcasts_to :game_board
 
   after_update :apply_svg
 
