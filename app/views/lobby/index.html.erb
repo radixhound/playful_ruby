@@ -67,12 +67,5 @@
 <%= turbo_stream_from @game_board %>
 
 	<div class="clearfix"></div>
-	<div class="game-board">
-		<% @game_tiles.each do |game_tile| %>
-			<% if game_tile.first_of_row? && game_tile.row != 0 %>
-				<div class="clearfix"></div>
-			<% end %>
-			<%= render game_tile %>
-		<% end %>
-	</div>
+<%= render @game_board, game_tiles: @game_tiles%>
 <section>
