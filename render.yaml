@@ -1,0 +1,18 @@
+databases:
+  - name: playful_ruby
+    databaseName: playful_ruby
+    user: playful_ruby
+
+services:
+  - type: web
+    name: playful_ruby
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: playful_ruby
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
