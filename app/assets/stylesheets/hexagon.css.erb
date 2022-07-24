@@ -1,14 +1,27 @@
 /* Game Board */
 <% base_size = 100 %>
 <% short_side = base_size / Math.sqrt(3) %>
-<% offset_height = Math.sqrt((short_side ** 2) - (base_size ** 2) / 4 ) %>
+<% offset_height = Math.sqrt((short_side ** 2) - (base_size ** 2) / 4 ).floor %>
+<% board_height = (GameTile::MAX_ROW + 2) * (short_side + offset_height).floor %>
+<% board_width = (GameTile::MAX_COLUMN + 2) * (short_side + offset_height).floor %>
 
 .view-window {
     position: relative;
     overflow: hidden;
-    width: 8000px;
-    height: 8000px;
+    width: <%= board_width %>px;
+    height: <%= board_height %>px;
 }
+
+.game-board {
+    position: absolute;
+    text-align: center;
+    top: -<%= offset_height %>px;
+    left: 225px;
+    width: 10000px;
+    height: 10000px;
+    background: #555;
+}
+
 .game-tile {
     float: left;
     margin-top: -<%= offset_height %>px;
@@ -28,11 +41,6 @@
     margin-left: <%= (0.5 * base_size).floor %>px;
 }
 
-.game-board {
-    text-align: center;
-    width: 10000px;
-    height: 10000px;
-}
 
 .game-tile .inner-hex {
     width: <%= base_size %>px;
