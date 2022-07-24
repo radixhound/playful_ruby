@@ -85,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: playful_ruby_production
-  username: playful_ruby
-  password: <%= ENV["PLAYFUL_RUBY_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
