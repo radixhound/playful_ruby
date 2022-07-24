@@ -63,8 +63,10 @@
 		<span>f</span>
 	<% end %>
 	</div>
-	<ul class="relative">
+	<ul class="relative scores mt-6">
 	  <%= turbo_frame_tag 'scores' do %>
+		  <p>SCORES:</p>
+			<p>---------</p>
 			<% @high_scores.each do |high_score| %>
 				<%= render high_score %>
 			<% end %>

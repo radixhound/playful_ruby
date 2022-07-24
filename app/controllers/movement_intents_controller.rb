@@ -18,7 +18,9 @@ class MovementIntentsController < ApplicationController
   end
 
   def ensure_tile_presence
-    @player.place(row: 4, column: 4) if @player.game_tile.blank?
+    while @player.game_tile.blank? || !@player.game_tile.navigable_by?('foot')
+      @player.place(row: rand(10..30), column: rand(0..9))
+    end
   end
 
   def apply_movement(movement)
