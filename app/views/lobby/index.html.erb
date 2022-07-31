@@ -8,11 +8,7 @@
     <a href="#!">
       <div class="flex items-center">
         <div class="shrink-0 rounded-full w-10">
-					<% if @avatar.representation.present? %>
-						<%= @avatar.representation.html_safe %>
-					<% else %>
-						<%= render "/game_pieces/players/default_svg"%>
-					<% end %>
+					<img src="<%= asset_path(@avatar.representation_image) %>"/>
         </div>
         <div class="grow ml-3">
           <p class="text-sm font-semibold text-blue-600"><%= @player.name %></p>
