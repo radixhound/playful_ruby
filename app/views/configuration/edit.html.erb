@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group mb-6">
-      <label for="first_name" class="form-label inline-block mb-2 text-gray-700">Game Piece SVG</label>
+      <label for="first_name" class="form-label inline-block mb-2 text-gray-700">Game Piece: <%= GamePieces::Player::APPEARANCES.join(", ")%></label>
       <%= f.text_area :player_svg, class: "form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" %>
     </div>
 

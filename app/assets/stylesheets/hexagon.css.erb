@@ -3,12 +3,12 @@
 <% short_side = base_size / Math.sqrt(3) %>
 <% offset_height = Math.sqrt((short_side ** 2) - (base_size ** 2) / 4 ).floor %>
 <% board_height = (GameTile::MAX_ROW + 2) * (short_side + offset_height).floor %>
-<% board_width = (GameTile::MAX_COLUMN + 2) * (short_side + offset_height).floor %>
+<% board_width = (GameTile::MAX_COLUMN + 1) * base_size %>
 
 .view-window {
     position: relative;
     overflow: hidden;
-    width: <%= board_width %>px;
+    width: <%= board_width + 250%>px; /* the width of the board plus the sidebar */
     height: <%= board_height %>px;
 }
 
@@ -19,7 +19,7 @@
     left: 225px;
     width: 10000px;
     height: 10000px;
-    background: #555;
+    background: #000;
 }
 
 .game-tile {

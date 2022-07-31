@@ -1,8 +1,16 @@
-<% base_size=100 %>.game-piece-person {
+<% base_size=100 %>
+
+.game-piece-person {
   padding-top: <%=(0.15 * base_size).floor%>px;
+  width: 100%;
+  height: 100%;
 }
 
-.game-piece-person.facing-right svg {
+.game-piece-person.ninja {
+  background-image: url(<%= asset_path('nicubunu_Game_baddie_Ninja.svg') %>);
+}
+
+.game-piece-person.facing-left img {
   transform: scaleX(-1)
 }
 
