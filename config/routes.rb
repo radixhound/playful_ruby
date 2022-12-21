@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :player do
     resources :movement_intents, only: :create
+    resources :action_intents, only: :create
   end
 
   resources :configuration, only: [:edit, :update]
