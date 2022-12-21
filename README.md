@@ -58,3 +58,9 @@ Day 3
 
 ## Reloading the game board
 
+From a console:
+
+`GameTile.delete_all`
+`GameTile.generate(rows: 10, columns:10)`
+
+
