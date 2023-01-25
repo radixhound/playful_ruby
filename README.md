@@ -30,12 +30,12 @@ Day 2
 ### Move the person
 
 - [x] render buttons to the page
-  # DONE send command to the server to move the person
-  #   - Player.update position player_controller CRUD
-  #   - Player.update(direction: "up")
-  #   - PlayerMovementIntentController#POST
-  # DONE store of the state of the person
-  # DONE send updates back to the screen to update the game board
+- [x] send command to the server to move the person
+- [ ] Player.update position player_controller CRUD
+- [ ] Player.update(direction: "up")
+- [ ]PlayerMovementIntentController#POST
+- [x] store of the state of the person
+- [x] send updates back to the screen to update the game board
 
 Day 3
 
