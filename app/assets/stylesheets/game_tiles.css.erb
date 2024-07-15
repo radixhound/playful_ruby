@@ -2,20 +2,61 @@
   background-color: #777;
 }
 
-.game-tile-background-grass {
+.game-tile-background-grass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 1; /* Ensure it is below the game piece */
   background-image: url(<%= asset_path('grass.jpg') %>);
 }
 
-.game-tile-background-rocks {
+.game-tile-background-rocks::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 1; /* Ensure it is below the game piece */
   background-image: url(<%= asset_path('rocky.jpg') %>);
 }
 
-.game-tile-background-dirt {
+.game-tile-background-dirt::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 1; /* Ensure it is below the game piece */
   background-image: url(<%= asset_path('dirt.jpg') %>);
 }
 
-.game-tile-background-water {
+.game-tile-background-water::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 1; /* Ensure it is below the game piece */
   background-image: url(<%= asset_path('water.jpg') %>);
+  opacity: 0.8;
 }
 
 .game-tile-background-nothing {

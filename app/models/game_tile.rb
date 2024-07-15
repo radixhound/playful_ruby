@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  background    :string
 #  column        :integer
+#  rotation      :integer          default(0)
 #  row           :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -34,7 +35,13 @@ class GameTile < ApplicationRecord
     rows.times do |row_number|
       # if a row or column exists, it will just be false
       columns.times do |column_number|
-        tile = GameTile.create(row: row_number, column: column_number, game_board: board, background: ['rocks', 'grass', 'grass', 'dirt', 'water'].sample)
+        tile = GameTile.create(
+          row: row_number,
+          column: column_number,
+          rotation: rand(0..5),
+          game_board: board,
+          background: ['rocks', 'grass', 'grass', 'dirt', 'water'].sample,
+        )
         Rails.logger.info "Tile: #{tile.errors.full_messages}" unless tile.valid?
       end
     end
