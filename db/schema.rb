@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_24_023319) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_15_175114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_24_023319) do
     t.datetime "updated_at", null: false
     t.bigint "game_board_id"
     t.string "background"
+    t.integer "rotation", default: 0
     t.index ["game_board_id"], name: "index_game_tiles_on_game_board_id"
     t.index ["game_piece_id"], name: "index_game_tiles_on_game_piece_id"
   end
