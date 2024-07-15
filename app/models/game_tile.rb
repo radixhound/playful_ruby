@@ -34,7 +34,7 @@ class GameTile < ApplicationRecord
     rows.times do |row_number|
       # if a row or column exists, it will just be false
       columns.times do |column_number|
-        tile = GameTile.create(row: row_number, column: column_number, game_board: board, background: 'rocks')
+        tile = GameTile.create(row: row_number, column: column_number, game_board: board, background: ['rocks', 'grass', 'grass', 'dirt', 'water'].sample)
         Rails.logger.info "Tile: #{tile.errors.full_messages}" unless tile.valid?
       end
     end
