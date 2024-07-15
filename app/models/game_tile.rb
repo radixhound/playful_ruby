@@ -34,7 +34,7 @@ class GameTile < ApplicationRecord
     rows.times do |row_number|
       # if a row or column exists, it will just be false
       columns.times do |column_number|
-        tile = GameTile.create(row: row_number, column: column_number, game_board: board)
+        tile = GameTile.create(row: row_number, column: column_number, game_board: board, background: 'rocks')
         Rails.logger.info "Tile: #{tile.errors.full_messages}" unless tile.valid?
       end
     end
@@ -43,6 +43,8 @@ class GameTile < ApplicationRecord
   def navigable_by?(method)
     if background == 'water'
       method == 'boat'
+    elsif background == 'nothing'
+      method == 'nothing'
     else
       method == 'foot'
     end

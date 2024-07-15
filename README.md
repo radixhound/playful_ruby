@@ -45,3 +45,22 @@ Day 3
 - [x] Finish the signup process and create a new player
 - [x] Introduce artwork for the player
 - [x] Add terrain for movement
+
+
+## Starting the server locally
+
+`docker-compose up`
+
+## Getting into a console
+
+`docker compose exec playful_ruby bash`
+`bin/rails c`
+
+## Reloading the game board
+
+From a console:
+
+`GameTile.delete_all`
+`GameTile.generate(rows: 10, columns:10)`
+
+

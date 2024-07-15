@@ -23,6 +23,7 @@ class GamePiece < ApplicationRecord
     Rails.logger.info "\n\nPlacing player on #{row},#{column}\n\n"
     new_tile = GameTile.find_by(row: row, column: column)
 
+    return if new_tile.blank?
     return unless new_tile.navigable_by?(navigating_by)
 
     increment_score if new_tile.game_piece_id.present? # If there's someone on the tile then we score
