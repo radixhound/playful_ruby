@@ -5,7 +5,7 @@
 %>
   <div  class="hex inner-hex">
     <div class="hex-in1">
-      <div class="hex-in2 hex-area game-tile-background-<%= game_tile.background %>">
+      <div class="hex-in2 hex-area hex-tile r-<%=game_tile.rotation %> bg-<%= game_tile.background %>">
         <%= render(game_tile.game_piece) unless game_tile.empty? %>
       </div>
     </div>

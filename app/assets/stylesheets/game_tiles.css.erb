@@ -1,64 +1,55 @@
-.game-tile-background-default {
+.hex-tile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  z-index: 1; /* Ensure it is below the game piece */
+  opacity: 0.6;
+}
+
+.bg-default {
   background-color: #777;
 }
 
-.game-tile-background-grass::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5;
-  z-index: 1; /* Ensure it is below the game piece */
+.bg-grass::before {
   background-image: url(<%= asset_path('grass.jpg') %>);
 }
 
-.game-tile-background-rocks::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5;
-  z-index: 1; /* Ensure it is below the game piece */
+.bg-rocks::before {
   background-image: url(<%= asset_path('rocky.jpg') %>);
 }
 
-.game-tile-background-dirt::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5;
-  z-index: 1; /* Ensure it is below the game piece */
+.bg-dirt::before {
   background-image: url(<%= asset_path('dirt.jpg') %>);
 }
 
-.game-tile-background-water::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5;
-  z-index: 1; /* Ensure it is below the game piece */
+.bg-water::before {
   background-image: url(<%= asset_path('water.jpg') %>);
   opacity: 0.8;
 }
 
-.game-tile-background-nothing {
+.bg-nothing {
   background-image: none;
+}
+
+.r-0::before {
+  background-position: center;
+}
+.r-1::before {
+  background-position: bottom left;
+}
+.r-2::before {
+  background-position: bottom right;
+}
+.r-3::before {
+  background-position: top right;
+}
+.r-4::before {
+  background-position: top left;
+}
+.r-5::before {
+  background-position: top center;
 }
