@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   end
 
   resources :configuration, only: [:edit, :update]
+  get '/lobby', to: "lobby#index", as: :lobby
 
   # Defines the root path route ("/")
-  root "lobby#index"
+  root "home#index"
 end
