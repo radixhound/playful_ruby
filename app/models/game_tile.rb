@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  background    :string
 #  column        :integer
+#  decoration    :jsonb            not null
 #  rotation      :integer          default(0)
 #  row           :integer
 #  created_at    :datetime         not null

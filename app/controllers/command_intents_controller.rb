@@ -40,8 +40,9 @@ class CommandIntentsController < ApplicationController
         when :delete
           target_tile.update(background: :nothing)
         when :create
-          puts "\n\n\n Create: #{@avatar.wand} \n\n\n"
           target_tile.update(background: @avatar.wand) unless @avatar.wand == "nothing"
+        when :insert
+          target_tile.update(decoration: { type: :text, content: params[:content] })
         end
       end
     end
