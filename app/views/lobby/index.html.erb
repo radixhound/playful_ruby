@@ -61,6 +61,9 @@
 			<% end %>
 			<%= button_to player_action_intents_path(@avatar, player_action: :delete), method: :post, data: { hotkey: 'd' } do %>
 			<% end %>
+			<%= button_to player_action_intents_path(@avatar, player_action: :create), method: :post, data: { hotkey: 'c' } do %>
+			<% end %>
+
 		</div>
 	<% end %>
 	<ul class="relative scores mt-6">

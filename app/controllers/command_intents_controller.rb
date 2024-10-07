@@ -39,6 +39,8 @@ class CommandIntentsController < ApplicationController
         case command
         when 'delete', :delete
           target_tile.update(background: :nothing)
+        when 'create', :create
+          target_tile.update(background: :grass)
         end
       end
     end
