@@ -9,9 +9,21 @@ class ActionIntentsController < ApplicationController
     @movement = params[:player_action]
     @avatar = GamePieces::Player.find(params[:player_id])
 
+    if tile = params[:tile]
+      @avatar.update!(wand: tile)
+    end
+
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to :root }
+    end
+  end
+
+  private
+
+  def apply_intents
+    if tile = params[:tile]
+      @avatar.update!(wand: tile)
     end
   end
 end

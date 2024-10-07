@@ -7,6 +7,7 @@
 #  lock_version   :integer
 #  representation :string
 #  type           :string
+#  wand           :text             default("nothing"), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  player_id      :bigint

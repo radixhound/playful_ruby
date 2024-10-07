@@ -42,4 +42,8 @@
     <%= button_to player_action_intents_path(@avatar, player_action: :create), method: :post, data: { hotkey: 'c' } do %>
     <% end %>
   </div>
+
+  <div class='flex justify-center mt-6'>
+    Wand: <%= @avatar.wand %>
+  </div>
 <% end %>
