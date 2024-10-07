@@ -21,7 +21,8 @@ class GamePiece < ApplicationRecord
 
   def place(row:, column:)
     Rails.logger.info "\n\nPlacing player on #{row},#{column}\n\n"
-    new_tile = GameTile.find_by(row: row, column: column)
+    board = GameBoard.last
+    new_tile = GameTile.find_by(game_board_id: board.id, row: row, column: column)
 
     return if new_tile.blank?
     return unless new_tile.navigable_by?(navigating_by)

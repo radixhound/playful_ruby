@@ -1,0 +1,12 @@
+<div id="<%= dom_id board_import %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Status:</strong>
+    <%= board_import.created_at %> - <%= board_import.status %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this board import", board_import, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this board import', edit_board_import_path(board_import), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
