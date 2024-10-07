@@ -1,21 +1,17 @@
-/* Game Board */
-<% base_size = 100 %>
-<% short_side = base_size / Math.sqrt(3) %>
-<% offset_height = Math.sqrt((short_side ** 2) - (base_size ** 2) / 4 ).floor %>
-<% board_height = (GameTile::MAX_ROW + 2) * (short_side + offset_height).floor %>
-<% board_width = (GameTile::MAX_COLUMN + 1) * base_size %>
+/* app/assets/stylesheets/application.css */
 
+/* Game Board Styles */
 .view-window {
     position: relative;
     overflow: hidden;
-    width: <%= board_width + 250%>px; /* the width of the board plus the sidebar */
-    height: <%= board_height %>px;
+    width: var(--board-width);
+    height: var(--board-height);
 }
 
 .game-board {
     position: absolute;
     text-align: center;
-    top: -<%= offset_height %>px;
+    top: calc(-1 * var(--offset-height));
     left: 225px;
     width: 10000px;
     height: 10000px;
@@ -24,7 +20,7 @@
 
 .game-tile {
     float: left;
-    margin-top: -<%= offset_height %>px;
+    margin-top: calc(-1 * var(--offset-height));
 }
 
 .game-tile .game-info {
@@ -38,15 +34,15 @@
 }
 
 .game-board .offset-first {
-    margin-left: <%= (0.5 * base_size).floor %>px;
+    margin-left: calc(0.5 * var(--base-size));
 }
 
 .game-tile .inner-hex {
-    width: <%= base_size %>px;
-    height: <%= (short_side * 2).floor %>px;
+    width: var(--base-size);
+    height: calc(2 * var(--short-side));
 }
 
-/* Hexagon */
+/* Hexagon Styles */
 .hive {
     position: relative;
 }
@@ -59,10 +55,6 @@
 .hex {
     overflow: hidden;
     visibility: hidden;
-    -webkit-transform: rotate(120deg);
-    -moz-transform: rotate(120deg);
-    -o-transform: rotate(120deg);
-    -ms-transform: rotate(120deg);
     transform: rotate(120deg);
 }
 
@@ -71,10 +63,6 @@
 .hex-area {
     width: 100%;
     height: 100%;
-    -webkit-transform: rotate(-60deg);
-    -moz-transform: rotate(-60deg);
-    -o-transform: rotate(-60deg);
-    -ms-transform: rotate(-60deg);
     transform: rotate(-60deg);
 }
 
@@ -90,29 +78,21 @@
     position: relative;
     margin: 0 auto;
     top: 14px;
-    height: 196px;
-    width: 168px;
+    width: var(--inner-hex-width);
+    height: var(--inner-hex-height);
 }
 
-/* clearfix */
-.clearfix:after {
-    content: " ";
+/* Clearfix */
+.clearfix::after {
+    content: "";
     display: block;
-    height: 0;
     clear: both;
-    visibility: hidden;
 }
 
-.clearfix {
-    display: inline-block;
-}
-
-/* Hide from IE Mac \*/
 .clearfix {
     display: block;
 }
 
-/* End hide from IE Mac */
 .none {
     display: none;
 }
@@ -121,5 +101,3 @@
     clear: both;
     padding-bottom: 20px;
 }
-
-/* End Clearfix */
