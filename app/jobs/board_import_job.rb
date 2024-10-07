@@ -50,7 +50,6 @@ class BoardImportJob < ApplicationJob
   def process_board(statement)
     statement.each_char.with_index do |char, index|
       tile_name = @tiles_mapping[char]
-      next if tile_name == 'empty'
 
       GameTile.create(
         game_board: @board,
