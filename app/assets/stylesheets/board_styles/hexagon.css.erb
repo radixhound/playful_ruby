@@ -6,6 +6,7 @@
     overflow: hidden;
     width: var(--board-width);
     height: var(--board-height);
+    perspective: 1200px;
 }
 
 .game-board {
@@ -15,8 +16,8 @@
     left: 225px;
     width: 10000px;
     background: #FFF;
-    <%# transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg); /* Simulate isometric tilt */
-    transform-style: preserve-3d; %>
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg); /* Simulate isometric tilt */
+    transform-style: preserve-3d;
 }
 
 .game-tile {
@@ -102,3 +103,4 @@
     clear: both;
     padding-bottom: 20px;
 }
+

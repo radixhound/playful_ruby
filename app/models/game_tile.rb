@@ -21,7 +21,7 @@
 class GameTile < ApplicationRecord
   # need to be able to dynamically set the bounds?
   MAX_COLUMN = 9
-  MAX_ROW = 49
+  MAX_ROW = 9
 
   belongs_to :game_board
   belongs_to :game_piece, optional: true
