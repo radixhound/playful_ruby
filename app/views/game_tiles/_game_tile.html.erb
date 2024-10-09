@@ -1,8 +1,9 @@
 
 <%= turbo_frame_tag(game_tile,
-  class: "hive game-tile #{game_tile.first_offset? ? 'offset-first' : ''} #{game_tile.first_row? ? 'first-row' : ''}"
+  class: "hive game-tile #{game_tile.first_offset? ? 'offset-first' : ''} #{game_tile.first_row? ? 'first-row' : ''} row-#{game_tile.row}"
 ) do
 %>
+  <div class="blue-400"></div>
   <div  class="hex inner-hex">
     <div class="hex-in1">
       <div class="hex-in2 hex-area hex-tile r-<%=game_tile.rotation %> bg-<%= game_tile.background %>">

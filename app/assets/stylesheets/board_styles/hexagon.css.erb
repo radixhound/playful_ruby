@@ -11,11 +11,12 @@
 .game-board {
     position: absolute;
     text-align: center;
-    top: calc(-1 * var(--offset-height));
+    <%# top: calc(-1 * var(--offset-height)); %>
     left: 225px;
     width: 10000px;
-    height: 10000px;
     background: #FFF;
+    <%# transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg); /* Simulate isometric tilt */
+    transform-style: preserve-3d; %>
 }
 
 .game-tile {
