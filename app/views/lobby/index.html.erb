@@ -59,10 +59,25 @@
 				</svg>
 				<span>f</span>
 			<% end %>
+		</div>
+		<div class='flex justify-center mt-6'>
 			<%= button_to player_action_intents_path(@avatar, player_action: :delete), method: :post, data: { hotkey: 'd' } do %>
+				'd' Delete
+			<% end %>
+		</div>
+		<div class='flex justify-center'>
+			<%= button_to player_action_intents_path(@avatar, player_action: :create), method: :post, data: { hotkey: 'c' } do %>
+				'c' Create<br>
+				Wand: <%= @avatar.wand %>
+			<% end %>
+		</div>
+		<div class='flex justify-center'>
+			<%= button_to player_action_intents_path(@avatar, player_action: :insert), method: :post, data: { hotkey: 'i' } do %>
+				'i' Insert<br>
 			<% end %>
 		</div>
 	<% end %>
+
 	<ul class="relative scores mt-6">
 	  <%= turbo_frame_tag 'scores' do %>
 		  <p>SCORES:</p>

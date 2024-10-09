@@ -10,6 +10,27 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+      <!-- Dynamic CSS Variables -->
+    <% base_size = @base_size || 100 %>
+    <% short_side = (base_size / Math.sqrt(3)).round(2) %>
+    <% offset_height = Math.sqrt((short_side ** 2) - ((base_size ** 2) / 4)).floor %>
+    <% board_height = ((GameTile::MAX_ROW + 2) * (short_side + offset_height)).floor %>
+    <% board_width = ((GameTile::MAX_COLUMN + 1) * base_size).floor %>
+    <% inner_hex_height = (2 * short_side).floor %>
+    <% inner_hex_width = base_size %>
+
+    <style>
+      :root {
+        --base-size: <%= base_size %>px;
+        --short-side: <%= short_side %>px;
+        --offset-height: <%= offset_height %>px;
+        --board-height: <%= board_height %>px;
+        --board-width: <%= board_width + 250 %>px;
+        --inner-hex-height: <%= inner_hex_height %>px;
+        --inner-hex-width: <%= inner_hex_width %>px;
+      }
+    </style>
   </head>
 
   <body>

@@ -1,0 +1,104 @@
+/* app/assets/stylesheets/application.css */
+
+/* Game Board Styles */
+.view-window {
+    position: relative;
+    overflow: hidden;
+    width: var(--board-width);
+    height: var(--board-height);
+}
+
+.game-board {
+    position: absolute;
+    text-align: center;
+    <%# top: calc(-1 * var(--offset-height)); %>
+    left: 225px;
+    width: 10000px;
+    background: #FFF;
+    <%# transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg); /* Simulate isometric tilt */
+    transform-style: preserve-3d; %>
+}
+
+.game-tile {
+    float: left;
+    margin-top: calc(-1 * var(--offset-height));
+}
+
+.game-tile .game-info {
+    display: block;
+    position: relative;
+    top: -999px;
+}
+
+.game-board .game-tile.first-row {
+    margin-top: 0;
+}
+
+.game-board .offset-first {
+    margin-left: calc(0.5 * var(--base-size));
+}
+
+.game-tile .inner-hex {
+    width: var(--base-size);
+    height: calc(2 * var(--short-side));
+}
+
+/* Hexagon Styles */
+.hive {
+    position: relative;
+}
+
+.outer-hex {
+    position: relative;
+    margin: 0 auto;
+}
+
+.hex {
+    overflow: hidden;
+    visibility: hidden;
+    transform: rotate(120deg);
+}
+
+.hex-in1,
+.hex-in2,
+.hex-area {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-60deg);
+}
+
+.hex-in1 {
+    overflow: hidden;
+}
+
+.hex-in2 {
+    visibility: visible;
+}
+
+.inner-hex {
+    position: relative;
+    margin: 0 auto;
+    top: 14px;
+    width: var(--inner-hex-width);
+    height: var(--inner-hex-height);
+}
+
+/* Clearfix */
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.clearfix {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+.clear {
+    clear: both;
+    padding-bottom: 20px;
+}

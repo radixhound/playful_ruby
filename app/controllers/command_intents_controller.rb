@@ -36,9 +36,13 @@ class CommandIntentsController < ApplicationController
       @avatar.with_lock do
         @avatar.touch
         @avatar.game_tile.reload
-        case command
-        when 'delete', :delete
+        case command.to_sym
+        when :delete
           target_tile.update(background: :nothing)
+        when :create
+          target_tile.update(background: @avatar.wand) unless @avatar.wand == "nothing"
+        when :insert
+          target_tile.update(decoration: { type: :text, content: params[:content] })
         end
       end
     end

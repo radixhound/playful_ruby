@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "keybindings" do %>
+  <div class="flex justify-center mt-6">
+    <%= form_with url: player_command_intents_path(@avatar), method: :post, data: { controller: "hotkey", hotkey_cancel_url_value: player_action_intents_path(@avatar, player_action: :cancel) } do %>
+      <%= hidden_field_tag :command, :insert %>
+      <%= text_field_tag :content, nil, data: { hotkey_target: "input", action: "keydown->hotkey#handleKeydown" } %>
+    <% end %>
+  </div>
+<% end %>
