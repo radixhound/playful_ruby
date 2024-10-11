@@ -15,6 +15,11 @@
   <% end %>
 </div>
 <div class='flex justify-center'>
+  <%= button_to player_action_intents_path(@avatar, n: 1, player_action: :zip), method: :post, data: { hotkey: 'z' } do %>
+    'z' Zip!<br>
+  <% end %>
+</div>
+<div class='flex justify-center'>
   <%= button_to player_action_intents_path(@avatar, n: 1, player_action: :insert), method: :post, data: { hotkey: 'i' } do %>
     'i' Insert<br>
   <% end %>

@@ -1,6 +1,6 @@
 class HexCoordinates
   MAX_COLUMN = 9
-  MAX_ROW = 7
+  MAX_ROW = 9
 
   attr_reader :row, :column
 
@@ -24,11 +24,9 @@ class HexCoordinates
         self
       end
 
-    if protected
-      new_coordinates.off_board? ? self : new_coordinates
-    else
-      new_coordinates
-    end
+    return new_coordinates unless protected
+
+    new_coordinates.off_board? ? self : new_coordinates
   end
 
   def to_h
@@ -40,8 +38,6 @@ class HexCoordinates
   end
 
   def bottom?
-    puts "BOTTOM: #{row} ? #{row == MAX_ROW}"
-
     row >= MAX_ROW
   end
 
@@ -50,7 +46,6 @@ class HexCoordinates
   end
 
   def rightmost?
-    puts "RIGHTMOST: #{column} ? #{column == MAX_COLUMN}"
     # this is a bit of a problem because the max is not dynamic
     # we need to store the size of the board on the board itself
     # rather than relying on constants

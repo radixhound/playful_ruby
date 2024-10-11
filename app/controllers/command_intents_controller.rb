@@ -37,14 +37,16 @@ class CommandIntentsController < ApplicationController
         @avatar.touch
         @avatar.game_tile.reload
         case command.to_sym
-        when :delete
-          target_tile.update(background: :nothing)
         when :create
           target_tile.update(background: @avatar.wand) unless @avatar.wand == "nothing"
-        when :split
-          split_tiles! # BOOM
+        when :delete
+          target_tile.update(background: :nothing)
         when :insert
           target_tile.update(decoration: { type: :text, content: params[:content] })
+        when :split
+          split_tiles! # BOOM
+        when :zip
+          zip_tiles! # BOOM
         end
       end
     end
@@ -64,7 +66,6 @@ class CommandIntentsController < ApplicationController
     last_tile = nil
     first_of_row = @avatar.game_tile
     facing = @avatar.direction
-    puts "\n\n-----\nsplitting #{@direction} #{first_of_row.inspect}"
     case @direction
     when 'up'
       # for each decrementing rows, insert a new tile, slide the rest of the row up by popping the next tile and
@@ -99,6 +100,63 @@ class CommandIntentsController < ApplicationController
         end
       end
     end
+  end
+
+  def zip_tiles!
+    @loop_count = 0
+
+    last_tile = nil
+    first_of_row = @avatar.game_tile
+    facing = @avatar.direction
+    case @direction
+    when 'up'
+      while !first_of_row.top?
+        current_tile = first_of_row = first_of_row.to_the('up', facing:)
+        facing = facing == 'right' ? 'left' : 'right' # zig zag so we split up
+        next unless first_of_row.nothing?
+
+        while !current_tile.rightmost?
+          next_tile = current_tile.to_the('right')
+          current_tile.swap!(next_tile).tap(&safely)
+          current_tile = next_tile
+        end
+      end
+    when 'down'
+      while !first_of_row.bottom?
+        current_tile = first_of_row = first_of_row.to_the('down', facing:)
+        facing = facing == 'right' ? 'left' : 'right' # zig zag so we split down
+        next unless first_of_row.nothing?
+
+        while !current_tile.rightmost?
+          next_tile = current_tile.to_the('right')
+          current_tile.swap!(next_tile).tap(&safely)
+          current_tile = next_tile
+        end
+      end
+    when 'left'
+      while !first_of_row.leftmost?
+        current_tile = first_of_row = first_of_row.to_the('left')
+        next unless first_of_row.nothing?
+
+        while !current_tile.bottom?
+          next_tile = current_tile.to_the('down')
+          current_tile.swap!(next_tile).tap(&safely)
+          current_tile = next_tile
+        end
+      end
+    when 'right'
+      while !first_of_row.rightmost?
+        current_tile = first_of_row = first_of_row.to_the('right')
+        next unless first_of_row.nothing?
+
+        while !current_tile.bottom?
+          next_tile = current_tile.to_the('down')
+          current_tile.swap!(next_tile).tap(&safely)
+          current_tile = next_tile
+        end
+      end
+    end
+    # when stitching, we will end up clearing the one on the end
   end
 
   def safely

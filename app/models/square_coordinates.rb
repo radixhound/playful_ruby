@@ -9,7 +9,7 @@ class SquareCoordinates
     @column = column
   end
 
-  def move(movement:, direction:)
+  def move(movement:, facing: 'right', protected: true)
     new_coordinates = case movement
       when 'up' then SquareCoordinates.new(row: row - 1, column:)
       when 'down' then SquareCoordinates.new(row: row + 1, column:)
@@ -18,11 +18,33 @@ class SquareCoordinates
       else
         self
       end
+
+    return new_coordinates unless protected
+
     new_coordinates.off_board? ? self : new_coordinates
   end
 
   def to_h
     { row: row, column: column }
+  end
+
+  def top?
+    row == 0
+  end
+
+  def bottom?
+    row >= MAX_ROW
+  end
+
+  def leftmost?
+    column == 0
+  end
+
+  def rightmost?
+    # this is a bit of a problem because the max is not dynamic
+    # we need to store the size of the board on the board itself
+    # rather than relying on constants
+    column >= MAX_COLUMN
   end
 
   def first_offset?

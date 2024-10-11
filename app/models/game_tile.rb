@@ -68,6 +68,10 @@ class GameTile < ApplicationRecord
     game_piece.blank?
   end
 
+  def nothing?
+    background == 'nothing'
+  end
+
   delegate :first_offset?, :top?, :bottom?, :leftmost?, :rightmost?, :off_board?, to: :coordinates
 
   def first_of_row?
@@ -96,15 +100,17 @@ class GameTile < ApplicationRecord
     return off_board_tile if off_board?
 
     tile_in_hand = self.dup
-    update!(tile_to_place.attributes.except('id', 'row', 'column', 'created_at', 'updated_at'))
-    tile_in_hand.tap { "\n\nSwapping #{_1.inspect}\n\n" } # return the target tile
+    style = tile_to_place.attributes.slice('background', 'decoration', 'rotation')
+    Rails.logger.info { "Swapping #{style}" }
+    update!(style)
+    tile_in_hand.tap { Rails.logger.info { "\n\nSwapping #{_1.inspect}\n\n" } } # return the target tile
   end
 
   def to_the(movement, facing: 'right')
     new_coordinates = coordinates.move(movement: movement, facing:, protected: false)
 
     tile = GameTile.find_by(**new_coordinates.to_h) || off_board_tile
-    tile.tap { puts "\n\nTaking #{tile.inspect}\n\n" }
+    tile.tap { Rails.logger.info { "\n\nTaking #{tile.inspect}\n\n" } }
   end
 
   # replace the current tile with a blank tile and return the current tile
@@ -113,7 +119,11 @@ class GameTile < ApplicationRecord
 
     tile_in_hand = self.dup
     update!(background: 'nothing', decoration: {})
-    tile_in_hand.tap { "\n\nPicking up #{_1.inspect}\n\n" }
+    tile_in_hand.tap { Rails.logger.info { "\n\nPicking up #{_1.inspect}\n\n" } }
+  end
+
+  def wipe!
+    update!(background: 'nothing', decoration: {})
   end
 
   def inspect
