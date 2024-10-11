@@ -6,6 +6,8 @@
   height: 100%;
   position: relative;
   z-index: 20;
+  transform-style: preserve-3d;
+  transform: rotateX(-30deg);
 }
 
 .game-piece-person.ninja {
@@ -13,7 +15,7 @@
 }
 
 .game-piece-person.facing-left img {
-  transform: scaleX(-1)
+  transform: scaleX(-1);
 }
 
 .scores {
@@ -28,7 +30,7 @@
   transform: translate(-50%, -50%); /* Centers the element */
   z-index: 10; /* Lower z-index to be behind the game piece */
 
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: bold;
   color: #000;
 }

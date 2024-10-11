@@ -19,13 +19,19 @@
 #  index_game_tiles_on_game_piece_id  (game_piece_id)
 #
 class GameTile < ApplicationRecord
+  include ActionView::RecordIdentifier # This makes dom_id available in the model
+
   # need to be able to dynamically set the bounds?
   MAX_COLUMN = 9
-  MAX_ROW = 49
+  MAX_ROW = 9
 
   belongs_to :game_board
   belongs_to :game_piece, optional: true
-  broadcasts_to :game_board
+
+  # Override broadcasting to include `board_type`
+  after_create_commit -> { broadcast_custom_game_tile }
+  after_update_commit -> { broadcast_custom_game_tile }
+  after_destroy_commit -> { broadcast_remove_to game_board }
 
   validates :column, uniqueness: { scope: :row }
 
@@ -62,7 +68,11 @@ class GameTile < ApplicationRecord
     game_piece.blank?
   end
 
-  delegate :first_offset?, to: :coordinates
+  def nothing?
+    background == 'nothing'
+  end
+
+  delegate :first_offset?, :top?, :bottom?, :leftmost?, :rightmost?, :off_board?, to: :coordinates
 
   def first_of_row?
     column == 0
@@ -77,74 +87,61 @@ class GameTile < ApplicationRecord
   end
 
   def coordinates
-    @coordinates ||= Coordinates.new(row: row, column: column)
+    @coordinates ||= case game_board.board_type
+    when 'hex' then HexCoordinates.new(row: row, column: column)
+    when 'square' then SquareCoordinates.new(row: row, column: column)
+    end
   end
 
-  class Coordinates
-    attr_reader :row, :column
+  # Command given to a tile on the board
+  # which will swap the tile with the tile in hand
+  # returning the tile that was on the board
+  def swap!(tile_to_place)
+    return off_board_tile if off_board?
 
-    def initialize(row:, column:)
-      Rails.logger.info "New Coordinate: #{row}, #{column}"
-      @row = row
-      @column = column
-    end
+    tile_in_hand = self.dup
+    style = tile_to_place.attributes.slice('background', 'decoration', 'rotation')
+    Rails.logger.info { "Swapping #{style}" }
+    update!(style)
+    tile_in_hand.tap { Rails.logger.info { "\n\nSwapping #{_1.inspect}\n\n" } } # return the target tile
+  end
 
-    def move(movement:, direction:)
-      new_coordinates = case movement
-        when 'up' then move_up(direction)
-        when 'down' then move_down(direction)
-        when 'left'
-          new_column = column - 1
-          Coordinates.new(row: row, column: new_column)
-        when 'right'
-          new_column = column + 1
-          Coordinates.new(row: row, column: new_column)
-        else
-          self
-        end
-      new_coordinates.off_board? ? self : new_coordinates
-    end
+  def to_the(movement, facing: 'right')
+    new_coordinates = coordinates.move(movement: movement, facing:, protected: false)
 
-    def to_h
-      { row: row, column: column }
-    end
+    tile = GameTile.find_by(**new_coordinates.to_h) || off_board_tile
+    tile.tap { Rails.logger.info { "\n\nTaking #{tile.inspect}\n\n" } }
+  end
 
-    def move_up(direction)
-      new_row = row - 1
+  # replace the current tile with a blank tile and return the current tile
+  def pick_up!
+    return off_board_tile if off_board?
 
-      new_column = if direction == 'right'
-        row_offset? ? column + 1 : column
-      else
-        row_offset? ? column : column - 1
-      end
+    tile_in_hand = self.dup
+    update!(background: 'nothing', decoration: {})
+    tile_in_hand.tap { Rails.logger.info { "\n\nPicking up #{_1.inspect}\n\n" } }
+  end
 
-      Coordinates.new(row: new_row, column: new_column)
-    end
+  def wipe!
+    update!(background: 'nothing', decoration: {})
+  end
 
-    def move_down(direction)
-      new_row = row + 1
+  def inspect
+    "Tile: #{background} (#{row}, #{column})"
+  end
 
-      new_column = if direction == 'right'
-        row_offset? ? column + 1 : column
-      else
-        row_offset? ? column : column - 1
-      end
+  private
 
-      Coordinates.new(row: new_row, column: new_column)
-    end
+  def off_board_tile
+    GameTile.new(row: 1000, column: 1000, game_board_id:)
+  end
 
-    def row_offset?
-      row % 2 == 1
-    end
-
-    def first_offset?
-      row_offset? && column == 0
-    end
-
-    def off_board?
-      off = row.negative? || row > MAX_ROW || column.negative? || column > MAX_COLUMN
-      Rails.logger.info "Moving OFF BOARD" if off
-      off
-    end
+  def broadcast_custom_game_tile
+    broadcast_replace_to(
+      game_board,
+      target: dom_id(self),
+      partial: "game_tiles/game_tile",
+      locals: { game_tile: self, board_type: game_board.board_type }
+    )
   end
 end

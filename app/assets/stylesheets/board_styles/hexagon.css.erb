@@ -6,22 +6,28 @@
     overflow: hidden;
     width: var(--board-width);
     height: var(--board-height);
+    perspective: 1200px;
 }
 
 .game-board {
+
     position: absolute;
     text-align: center;
     <%# top: calc(-1 * var(--offset-height)); %>
     left: 225px;
     width: 10000px;
-    background: #FFF;
+    background-color: #ddd;
     <%# transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg); /* Simulate isometric tilt */
     transform-style: preserve-3d; %>
 }
 
-.game-tile {
+.hex-board .game-tile {
     float: left;
     margin-top: calc(-1 * var(--offset-height));
+}
+
+.square-board .game-tile {
+    float: left;
 }
 
 .game-tile .game-info {
@@ -43,6 +49,12 @@
     height: calc(2 * var(--short-side));
 }
 
+/* Square Styles */
+.game-tile .square-tile {
+    width: var(--base-size);
+    height: var(--base-size);
+}
+
 /* Hexagon Styles */
 .hive {
     position: relative;
@@ -57,6 +69,7 @@
     overflow: hidden;
     visibility: hidden;
     transform: rotate(120deg);
+    border: 1px solid #000;
 }
 
 .hex-in1,
@@ -102,3 +115,4 @@
     clear: both;
     padding-bottom: 20px;
 }
+
