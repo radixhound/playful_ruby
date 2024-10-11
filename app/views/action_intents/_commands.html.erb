@@ -10,6 +10,11 @@
   <% end %>
 </div>
 <div class='flex justify-center'>
+  <%= button_to player_action_intents_path(@avatar, n: 1, player_action: :split), method: :post, data: { hotkey: 's' } do %>
+    's' Split!<br>
+  <% end %>
+</div>
+<div class='flex justify-center'>
   <%= button_to player_action_intents_path(@avatar, n: 1, player_action: :insert), method: :post, data: { hotkey: 'i' } do %>
     'i' Insert<br>
   <% end %>

@@ -68,7 +68,7 @@ class GameTile < ApplicationRecord
     game_piece.blank?
   end
 
-  delegate :first_offset?, to: :coordinates
+  delegate :first_offset?, :top?, :bottom?, :leftmost?, :rightmost?, :off_board?, to: :coordinates
 
   def first_of_row?
     column == 0
@@ -89,7 +89,42 @@ class GameTile < ApplicationRecord
     end
   end
 
+  # Command given to a tile on the board
+  # which will swap the tile with the tile in hand
+  # returning the tile that was on the board
+  def swap!(tile_to_place)
+    return off_board_tile if off_board?
+
+    tile_in_hand = self.dup
+    update!(tile_to_place.attributes.except('id', 'row', 'column', 'created_at', 'updated_at'))
+    tile_in_hand.tap { "\n\nSwapping #{_1.inspect}\n\n" } # return the target tile
+  end
+
+  def to_the(movement, facing: 'right')
+    new_coordinates = coordinates.move(movement: movement, facing:, protected: false)
+
+    tile = GameTile.find_by(**new_coordinates.to_h) || off_board_tile
+    tile.tap { puts "\n\nTaking #{tile.inspect}\n\n" }
+  end
+
+  # replace the current tile with a blank tile and return the current tile
+  def pick_up!
+    return off_board_tile if off_board?
+
+    tile_in_hand = self.dup
+    update!(background: 'nothing', decoration: {})
+    tile_in_hand.tap { "\n\nPicking up #{_1.inspect}\n\n" }
+  end
+
+  def inspect
+    "Tile: #{background} (#{row}, #{column})"
+  end
+
   private
+
+  def off_board_tile
+    GameTile.new(row: 1000, column: 1000, game_board_id:)
+  end
 
   def broadcast_custom_game_tile
     broadcast_replace_to(

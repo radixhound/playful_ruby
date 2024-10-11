@@ -34,7 +34,7 @@ class MovementIntentsController < ApplicationController
         new_coordinates = @player.game_tile.coordinates
         count.times do
           new_coordinates = new_coordinates.move(
-            movement: movement, direction: @player.direction
+            movement: movement, facing: @player.direction
           )
         end
         @player.place(**new_coordinates.to_h) unless new_coordinates == @player.game_tile.coordinates
