@@ -19,13 +19,19 @@
 #  index_game_tiles_on_game_piece_id  (game_piece_id)
 #
 class GameTile < ApplicationRecord
+  include ActionView::RecordIdentifier # This makes dom_id available in the model
+
   # need to be able to dynamically set the bounds?
   MAX_COLUMN = 9
   MAX_ROW = 9
 
   belongs_to :game_board
   belongs_to :game_piece, optional: true
-  broadcasts_to :game_board
+
+  # Override broadcasting to include `board_type`
+  after_create_commit -> { broadcast_custom_game_tile }
+  after_update_commit -> { broadcast_custom_game_tile }
+  after_destroy_commit -> { broadcast_remove_to game_board }
 
   validates :column, uniqueness: { scope: :row }
 
@@ -77,74 +83,20 @@ class GameTile < ApplicationRecord
   end
 
   def coordinates
-    @coordinates ||= Coordinates.new(row: row, column: column)
+    @coordinates ||= case game_board.board_type
+    when 'hex' then HexCoordinates.new(row: row, column: column)
+    when 'square' then SquareCoordinates.new(row: row, column: column)
+    end
   end
 
-  class Coordinates
-    attr_reader :row, :column
+  private
 
-    def initialize(row:, column:)
-      Rails.logger.info "New Coordinate: #{row}, #{column}"
-      @row = row
-      @column = column
-    end
-
-    def move(movement:, direction:)
-      new_coordinates = case movement
-        when 'up' then move_up(direction)
-        when 'down' then move_down(direction)
-        when 'left'
-          new_column = column - 1
-          Coordinates.new(row: row, column: new_column)
-        when 'right'
-          new_column = column + 1
-          Coordinates.new(row: row, column: new_column)
-        else
-          self
-        end
-      new_coordinates.off_board? ? self : new_coordinates
-    end
-
-    def to_h
-      { row: row, column: column }
-    end
-
-    def move_up(direction)
-      new_row = row - 1
-
-      new_column = if direction == 'right'
-        row_offset? ? column + 1 : column
-      else
-        row_offset? ? column : column - 1
-      end
-
-      Coordinates.new(row: new_row, column: new_column)
-    end
-
-    def move_down(direction)
-      new_row = row + 1
-
-      new_column = if direction == 'right'
-        row_offset? ? column + 1 : column
-      else
-        row_offset? ? column : column - 1
-      end
-
-      Coordinates.new(row: new_row, column: new_column)
-    end
-
-    def row_offset?
-      row % 2 == 1
-    end
-
-    def first_offset?
-      row_offset? && column == 0
-    end
-
-    def off_board?
-      off = row.negative? || row > MAX_ROW || column.negative? || column > MAX_COLUMN
-      Rails.logger.info "Moving OFF BOARD" if off
-      off
-    end
+  def broadcast_custom_game_tile
+    broadcast_replace_to(
+      game_board,
+      target: dom_id(self),
+      partial: "game_tiles/game_tile",
+      locals: { game_tile: self, board_type: game_board.board_type }
+    )
   end
 end

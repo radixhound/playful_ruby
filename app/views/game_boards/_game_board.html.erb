@@ -1,8 +1,8 @@
-<div class="game-board">
+<div class="game-board <%= game_board.board_type %>-board">
   <% game_tiles.each do |game_tile| %>
     <% if game_tile.first_of_row? && game_tile.row != 0 %>
       <div class="clearfix"></div>
     <% end %>
-    <%= render game_tile %>
+    <%= render game_tile, board_type: game_board.board_type %>
   <% end %>
 </div>

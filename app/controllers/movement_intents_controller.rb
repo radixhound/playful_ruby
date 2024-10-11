@@ -24,15 +24,20 @@ class MovementIntentsController < ApplicationController
   end
 
   def apply_movement(movement)
+    count = params[:n].to_i
+    count = 1 if count.zero?
+
     @player.transaction do
       @player.with_lock do
         @player.touch
         @player.game_tile.reload
-        current_coordinates = @player.game_tile.coordinates
-        new_coordinates = current_coordinates.move(
-          movement: movement, direction: @player.direction
-        )
-        @player.place(**new_coordinates.to_h) unless new_coordinates == current_coordinates
+        new_coordinates = @player.game_tile.coordinates
+        count.times do
+          new_coordinates = new_coordinates.move(
+            movement: movement, direction: @player.direction
+          )
+        end
+        @player.place(**new_coordinates.to_h) unless new_coordinates == @player.game_tile.coordinates
       end
     end
   end
