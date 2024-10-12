@@ -47,7 +47,7 @@ class GameTile < ApplicationRecord
           column: column_number,
           rotation: rand(0..5),
           game_board: board,
-          background: ['rocks', 'grass', 'grass', 'dirt', 'water'].sample,
+          background: ['rocks', 'grass', 'grass', 'dirt', 'water', 'sand'].sample,
         )
         Rails.logger.info "Tile: #{tile.errors.full_messages}" unless tile.valid?
       end

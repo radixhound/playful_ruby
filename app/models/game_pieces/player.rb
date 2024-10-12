@@ -22,7 +22,7 @@ module GamePieces
     # validates :representation, inclusion: { in: GamePieces::Player::APPEARANCES, message: "Please select one of #{GamePieces::Player::APPEARANCES.join(", ")}"}
 
     APPEARANCES = [
-      'Angel', 'Alien', 'Basic_guy', 'Borg', 'Bricky', 'Camouflage', 'Candy', 'Chef', 'Dandy', 'Ninja', 'Squared',
+      'samurai'
     ].freeze
 
     def facing_right?
@@ -53,7 +53,7 @@ module GamePieces
 
     def representation_image
       if use_asset?
-        "nicubunu_Game_baddie_#{representation}.svg"
+        "#{representation}_idle.png"
       else
         "nicubunu_Game_baddie_Ninja.svg"
       end
