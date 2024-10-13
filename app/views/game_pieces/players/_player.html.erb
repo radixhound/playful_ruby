@@ -1,3 +1,3 @@
 <div class="game-piece-person <%= player.facing_right? ? "facing-right" : "facing-left"%>" id='<%= dom_id(player)%>'>
-  <img src="<%= asset_path(player.representation_image) %>"  />
+    <div class="sprite" style="background-image: url('<%= asset_path(player.representation_image) %>')" ></div>
 </div>

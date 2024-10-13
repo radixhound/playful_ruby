@@ -6,7 +6,7 @@ class ConfigurationController < ApplicationController
 
   def update
     @player.update(update_params)
-    redirect_to :root
+    redirect_to :lobby
   end
 
   private

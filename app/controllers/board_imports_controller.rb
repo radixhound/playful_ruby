@@ -24,7 +24,7 @@ class BoardImportsController < ApplicationController
     @board_import = BoardImport.new(board_import_params)
 
     respond_to do |format|
-      if @board_import.save
+      if @board_import.save!
         format.html { redirect_to board_import_url(@board_import), notice: "Board import was successfully created." }
         format.json { render :show, status: :created, location: @board_import }
       else

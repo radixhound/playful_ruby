@@ -19,6 +19,6 @@ class GameBoard < ApplicationRecord
     return if GameBoard.any?
 
     board = GameBoard.create
-    GameTile.generate(rows: 10, columns: 10)
+    GameTile.generate(rows: 20, columns: 20)
   end
 end

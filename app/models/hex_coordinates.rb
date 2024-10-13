@@ -1,6 +1,6 @@
 class HexCoordinates
-  MAX_COLUMN = 9
-  MAX_ROW = 9
+  MAX_COLUMN = 20
+  MAX_ROW = 20
 
   attr_reader :row, :column
 
