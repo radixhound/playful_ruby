@@ -6,7 +6,7 @@ class BoardImportJob < ApplicationJob
     @board_import = BoardImport.find(board_import_id)
     GameBoard.destroy_all # for now :sad
     GameTile.destroy_all # for now :sad
-    @board = GameBoard.create
+    @board = GameBoard.create(board_type: 'square')
     @tiles_mapping = {}
     @row = 0
 

@@ -22,8 +22,8 @@ class GameTile < ApplicationRecord
   include ActionView::RecordIdentifier # This makes dom_id available in the model
 
   # need to be able to dynamically set the bounds?
-  MAX_COLUMN = 9
-  MAX_ROW = 9
+  MAX_COLUMN = 20
+  MAX_ROW = 20
 
   belongs_to :game_board
   belongs_to :game_piece, optional: true

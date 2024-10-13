@@ -36,11 +36,11 @@
 
   <body>
 
-    <section class="container mx-auto mt-6 px-5 flex">
+    <section class="container  mx-auto mt-6 px-5 flex">
       <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600 text-center block w-full"> Playful Ruby </h1>
       <%= link_to 'import board', new_board_import_path, class: "mt-6 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"%>
     </section>
-    <main class="container mx-auto px-5 flex">
+    <main class="container wide-container mx-auto px-5 flex">
       <% if notice %>
         <p class="alert alert-success bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3"><%= notice %></p>
       <% end %>
