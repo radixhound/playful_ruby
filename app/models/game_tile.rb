@@ -33,12 +33,11 @@ class GameTile < ApplicationRecord
   after_update_commit -> { broadcast_custom_game_tile }
   after_destroy_commit -> { broadcast_remove_to game_board }
 
-  validates :column, uniqueness: { scope: :row }
+  validates :column, uniqueness: { scope: [:row, :game_board_id] }
 
   scope :all_by_grid, -> { all.order(row: :asc, column: :asc) }
 
-  def self.generate(rows:, columns:)
-    board = GameBoard.last
+  def self.generate(rows:, columns:, board: GameBoard.last)
     rows.times do |row_number|
       # if a row or column exists, it will just be false
       columns.times do |column_number|
@@ -88,8 +87,8 @@ class GameTile < ApplicationRecord
 
   def coordinates
     @coordinates ||= case game_board.board_type
-    when 'hex' then HexCoordinates.new(row: row, column: column)
-    when 'square' then SquareCoordinates.new(row: row, column: column)
+    when 'hex' then HexCoordinates.new(row: row, column: column, max_row: game_board.rows, max_column: game_board.columns)
+    when 'square' then SquareCoordinates.new(row: row, column: column, max_row: game_board.rows, max_column: game_board.columns)
     end
   end
 

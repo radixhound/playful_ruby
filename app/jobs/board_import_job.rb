@@ -4,9 +4,7 @@ class BoardImportJob < ApplicationJob
 
   def perform(board_import_id)
     @board_import = BoardImport.find(board_import_id)
-    GameBoard.destroy_all # for now :sad
-    GameTile.destroy_all # for now :sad
-    @board = GameBoard.create(board_type: 'square')
+    @board = GameBoard.create(board_type: 'hex')
     @tiles_mapping = {}
     @row = 0
 
@@ -31,6 +29,7 @@ class BoardImportJob < ApplicationJob
       when :board then process_board(statement)
       end
 
+      @board.update(rows: @row, columns: @columns.max)
       @board_import.update(status: "complete")
     end
   end
@@ -48,6 +47,8 @@ class BoardImportJob < ApplicationJob
   end
 
   def process_board(statement)
+    @columns ||= []
+    @columns << 0
     statement.each_char.with_index do |char, index|
       tile_name = @tiles_mapping[char]
 
@@ -58,7 +59,9 @@ class BoardImportJob < ApplicationJob
         rotation: rand(0..5),
         background: tile_name,
       )
+      @columns[@columns.length - 1] += 1
     end
+
     @row += 1
   end
 end

@@ -15,8 +15,8 @@
     <% base_size = 80 * (@scale || 1) %>
     <% short_side = (base_size / Math.sqrt(3)).round(2) %>
     <% offset_height = Math.sqrt((short_side ** 2) - ((base_size ** 2) / 4)).floor %>
-    <% board_height = ((GameTile::MAX_ROW + 2) * (short_side + offset_height)).floor %>
-    <% board_width = ((GameTile::MAX_COLUMN + 1) * base_size).floor %>
+    <% board_height = ((@game_board.rows + 2) * (short_side + offset_height)).floor %>
+    <% board_width = ((@game_board.columns + 1) * base_size).floor %>
     <% inner_hex_height = (2 * short_side).floor %>
     <% inner_hex_width = base_size %>
 

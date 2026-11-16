@@ -9,6 +9,6 @@ class LobbyController < ApplicationController
     @player = current_login_credential.players.first
     @avatar = @player.game_piece
     @high_scores = Score.order(value: :desc).limit(10)
-    @scale = 1.5
+    @scale = 2.0
   end
 end

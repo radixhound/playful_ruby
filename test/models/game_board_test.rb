@@ -4,7 +4,9 @@
 #
 #  id         :bigint           not null, primary key
 #  board_type :text             default("hex"), not null
+#  columns    :integer
 #  name       :string
+#  rows       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
